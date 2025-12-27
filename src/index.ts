@@ -11,8 +11,21 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
+import { PrismaClient } from './generated/prisma/client';
+import { PrismaD1 } from '@prisma/adapter-d1';
+
+export interface Env {
+	DB: D1Database;
+}
+
 export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		return new Response('Hello World!');
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		const adapter = new PrismaD1(env.DB);
+		const prisma = new PrismaClient({ adapter });
+
+		const users = await prisma.user.findMany();
+		const result = JSON.stringify(users);
+		ctx.waitUntil(prisma.$disconnect()); // or just await prisma.$disconnect()
+		return new Response(result);
 	},
-} satisfies ExportedHandler<Env>;
+};
