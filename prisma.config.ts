@@ -9,7 +9,7 @@ export default defineConfig({
   migrations: {
     path: "prisma/migrations",
   },
-  datasource: {
-    url: `file:${listLocalDatabases().pop()}`,
-  },
+  // datasource: {
+  //   url: `file:${listLocalDatabases().pop()}`,
+  // },
 });
