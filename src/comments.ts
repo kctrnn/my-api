@@ -1,12 +1,16 @@
 import { Hono } from "hono";
 
+import { PrismaD1 } from "@prisma/adapter-d1";
+import { PrismaClient } from "./generated/prisma/client";
+
 const app = new Hono<{ Bindings: Env }>();
 
 app.get("/", async (c) => {
-  const stmt = c.env.DB.prepare("SELECT * FROM comments");
-  const { results } = await stmt.all();
+  const adapter = new PrismaD1(c.env.DB);
+  const prisma = new PrismaClient({ adapter });
 
-  return c.json(results);
+  const comments = await prisma.comment.findMany();
+  return c.json(comments);
 });
 
 export default app;
