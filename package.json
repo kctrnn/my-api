@@ -24,9 +24,9 @@
 	"scripts": {
 		"cf-typegen": "wrangler types",
 		"check": "tsc && wrangler deploy --dry-run",
-		"deploy": "pnpm generate && wrangler deploy",
 		"dev": "pnpm generate && wrangler dev",
-		"generate": "npx prisma generate",
+		"deploy": "pnpm generate && wrangler deploy",
+		"generate": "prisma generate",
 		"predev": "wrangler d1 migrations apply DB --local",
 		"predeploy": "wrangler d1 migrations apply DB --remote"
 	},
