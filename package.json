@@ -26,7 +26,7 @@
 		"check": "tsc && wrangler deploy --dry-run",
 		"deploy": "pnpm generate && wrangler deploy",
 		"dev": "pnpm generate && wrangler dev",
-		"generate": "prisma generate",
+		"generate": "npx prisma generate",
 		"predev": "wrangler d1 migrations apply DB --local",
 		"predeploy": "wrangler d1 migrations apply DB --remote"
 	},
